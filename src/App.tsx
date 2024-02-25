@@ -5,12 +5,12 @@ import { v1 } from "uuid";
 import { AddItemForm } from "./AddItemForm";
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography } from "@mui/material";
-import { Padding } from "@mui/icons-material";
+
 
 
 
 export type FilterValuesType = 'all' | 'completed' | 'active';
-type TodolistType = {
+export type TodolistType = {
   id: string
   title: string
   filter: FilterValuesType
