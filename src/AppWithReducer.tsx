@@ -20,7 +20,7 @@ export type TaskStateType = {
   [key: string]: Array<TaskType>
 }
 
-function App() {
+function AppWithReducer() {
 
 
   function removeTask(id: string, todolistId: string) {
@@ -50,7 +50,7 @@ function App() {
       setTasks({ ...tasks });
     }
   }
-  
+
 
   function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
     let todolistTasks = tasks[todolistId];
@@ -186,4 +186,4 @@ function App() {
 
 
 
-export default App;
+export default AppWithReducer;
