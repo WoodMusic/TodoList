@@ -5,8 +5,10 @@ import EditableSpan from "./EditableSpan";
 import { Checkbox, IconButton } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+// import BookmarkIcon from '@mui/icons-material/Bookmark';
+// import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
 
 export type TaskType = {
@@ -81,9 +83,9 @@ export const TodoList = (props: PropsType) => {
                             <div className={t.isDone ? "is-done" : ""} key={t.id}>
                                 <Checkbox
                                     {...label}
-                                    icon={<BookmarkBorderIcon />}
-                                    checkedIcon={<BookmarkIcon />}
                                     checked={t.isDone}
+                                    icon={<CheckBoxOutlineBlankIcon />}
+                                    checkedIcon={<CheckBoxIcon />}
                                     onChange={changeTaskStatusHandler}
                                 />
                                 <EditableSpan title={t.title} onChange={changeTaskTitleHandler} />

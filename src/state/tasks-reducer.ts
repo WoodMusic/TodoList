@@ -1,6 +1,8 @@
+import nextId from "react-id-generator";
 import { TaskStateType } from "../App";
 import { AddTodolistActionType, RemoveTodolistActionType } from "./todolist-reducer";
 
+// import { v1 } from "uuid";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -33,7 +35,13 @@ export type ChangeTaskTitleActionType = {
 export type ActionsType = RemoveTaskActionType | AddTaskActionType
     | ChangeTaskStatusActionType | ChangeTaskTitleActionType | AddTodolistActionType | RemoveTodolistActionType;
 
-export const tasksReducer = (state: TaskStateType, action: ActionsType): TaskStateType => {
+
+
+const initialState: TaskStateType = {
+
+}
+
+export const tasksReducer = (state: TaskStateType = initialState, action: ActionsType): TaskStateType => {
     switch (action.type) {
         case 'REMOVE-TASK': {
             const stateCopy = { ...state };
@@ -46,7 +54,7 @@ export const tasksReducer = (state: TaskStateType, action: ActionsType): TaskSta
             const stateCopy = { ...state };
             const tasks = stateCopy[action.todolistId];
             const newTask = {
-                id: action.todolistId,
+                id: nextId(),
                 title: action.title,
                 isDone: false
             };
@@ -90,9 +98,12 @@ export const tasksReducer = (state: TaskStateType, action: ActionsType): TaskSta
 
 
         default:
-            throw new Error("I don't understand this action type");
+            return state;
     }
 }
+
+// const generateId = v1();
+
 
 
 export const removeTaskAC = (taskId: string, todolistId: string): RemoveTaskActionType => {
@@ -107,13 +118,13 @@ export const changeTaskStatusAC = (
     taskId: string,
     isDone: boolean,
     todolistId: string): ChangeTaskStatusActionType => {
-    return { type: 'CHANGE-TASK-STATUS', isDone, todolistId, taskId }
+    return { type: 'CHANGE-TASK-STATUS', taskId, isDone, todolistId }
 }
 
 export const changeTaskTitleAC = (
     taskId: string,
     title: string,
     todolistId: string): ChangeTaskTitleActionType => {
-    return { type: 'CHANGE-TASK-TITLE', title, todolistId, taskId }
+    return { type: 'CHANGE-TASK-TITLE', taskId, title, todolistId, }
 }
 

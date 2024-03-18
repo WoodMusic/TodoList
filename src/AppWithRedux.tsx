@@ -1,13 +1,15 @@
-import React, { useReducer } from "react";
 import './App.css';
 import { TaskType, TodoList } from './Todolist';
-import { v1 } from "uuid";
 import { AddItemForm } from "./AddItemForm";
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography } from "@mui/material";
-import { addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC, todolistsReducer } from "./state/todolist-reducer";
-import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer } from "./state/tasks-reducer";
-import { title } from "process";
+import { addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC } from "./state/todolist-reducer";
+import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from "./state/tasks-reducer";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { AppRootState } from "./state/store";
+
+
 
 
 
@@ -23,72 +25,56 @@ export type TaskStateType = {
   [key: string]: Array<TaskType>
 }
 
-function AppWithReducer() {
-  let todolistId1 = v1();
-  let todolistId2 = v1();
+function AppWithRedux() {
 
-  let [todolists, dispatchToTodolistsReducer] = useReducer(todolistsReducer, [
-    { id: todolistId1, title: 'What to learn', filter: 'all' },
-    { id: todolistId2, title: 'What to buy', filter: 'all' }
-  ]);
+  const dispatch = useDispatch();
 
-  let [tasks, dispatchToTasksReducer] = useReducer(tasksReducer, {
-    [todolistId1]: [
-      { id: v1(), title: 'CSS', isDone: true },
-      { id: v1(), title: 'JS', isDone: true },
-      { id: v1(), title: 'React', isDone: false },
-      { id: v1(), title: 'Redux', isDone: false },
-    ],
-    [todolistId2]: [
-      { id: v1(), title: 'Book', isDone: false },
-      { id: v1(), title: 'Milk', isDone: true },
-    ]
-  });
+  const todolists = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists)
+  const tasks = useSelector<AppRootState, TaskStateType>(state => state.tasks)
+
 
   function removeTask(id: string, todolistId: string) {
     const action = removeTaskAC(id, todolistId);
-    dispatchToTasksReducer(action);
+    dispatch(action);
   }
 
-  function addTask(title: string, todolistId: string) {
+  function  addTask(title: string, todolistId: string) {
     const action = addTaskAC(title, todolistId);
-    dispatchToTasksReducer(action);
+    dispatch(action);
   }
 
   function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
     const action = changeTaskStatusAC(taskId, isDone, todolistId);
-    dispatchToTasksReducer(action);
+    dispatch(action);
   }
 
 
   function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
     const action = changeTaskTitleAC(taskId, newTitle, todolistId);
-    dispatchToTasksReducer(action);
+    dispatch(action);
   }
 
   function changeFilter(value: FilterValuesType, todolistId: string) {
     const action = changeTodolistFilterAC(value, todolistId);
-    dispatchToTodolistsReducer(action);
+    dispatch(action);
   }
 
 
 
   let removeTodolist = (todolistId: string) => {
     const action = removeTodolistAC(todolistId);
-    dispatchToTodolistsReducer(action);
-    dispatchToTasksReducer(action);
+    dispatch(action);
   }
 
   function changeTodolistTitle(id: string, newTitle: string) {
     const action = changeTodolistTitleAC(id, newTitle);
-    dispatchToTodolistsReducer(action);
+    dispatch(action);
   }
 
 
   function addTodolist(title: string) {
     const action = addTodolistAC(title);
-    dispatchToTodolistsReducer(action);
-    dispatchToTasksReducer(action);
+    dispatch(action);
   }
 
 
@@ -107,7 +93,7 @@ function AppWithReducer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            Todolist
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
@@ -159,4 +145,4 @@ function AppWithReducer() {
 
 
 
-export default AppWithReducer;
+export default AppWithRedux;
