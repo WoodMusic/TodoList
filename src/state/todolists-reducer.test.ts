@@ -5,13 +5,13 @@ import {
     removeTodolistAC,
     todolistsReducer
 } from './todolist-reducer';
-import { v1 } from "uuid";
-import { TodolistType, FilterValuesType } from '../App';
+import nextId from "react-id-generator";
+import { TodolistType, FilterValuesType } from '../AppWithRedux';
 
 
 test('correct todolist should be removed', () => {
-    let todolistId1 = v1();
-    let todolistId2 = v1();
+    let todolistId1 = nextId();
+    let todolistId2 = nextId();
 
     const startState: Array<TodolistType> = [
         { id: todolistId1, title: 'What to learn', filter: 'all' },
@@ -26,8 +26,8 @@ test('correct todolist should be removed', () => {
 
 
 test('correct todolist should be added', () => {
-    let todolistId1 = v1();
-    let todolistId2 = v1();
+    let todolistId1 = nextId();
+    let todolistId2 = nextId();
 
     let newTodolistTitle = 'NewTodolist';
 
@@ -45,8 +45,8 @@ test('correct todolist should be added', () => {
 
 
 test('correct todolist should change its name', () => {
-    let todolistId1 = v1();
-    let todolistId2 = v1();
+    let todolistId1 = nextId();
+    let todolistId2 = nextId();
 
     let newTodolistTitle = 'NewTodolist';
 
@@ -64,8 +64,8 @@ test('correct todolist should change its name', () => {
 });
 
 test('correct filter of todolist should be changed', () => {
-    let todolistId1 = v1();
-    let todolistId2 = v1();
+    let todolistId1 = nextId();
+    let todolistId2 = nextId();
 
     let newFilter: FilterValuesType = 'completed';
 

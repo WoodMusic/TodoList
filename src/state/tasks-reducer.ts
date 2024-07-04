@@ -1,8 +1,7 @@
 import nextId from "react-id-generator";
-import { TaskStateType } from "../App";
+import { TaskStateType } from "../AppWithRedux";
 import { AddTodolistActionType, RemoveTodolistActionType } from "./todolist-reducer";
 
-// import { v1 } from "uuid";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -66,20 +65,16 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
         case 'CHANGE-TASK-STATUS': {
             const stateCopy = { ...state }
             let tasks = state[action.todolistId];
-            let task = tasks.find(t => t.id === action.taskId);
-            if (task) {
-                task.isDone = action.isDone;
-            }
+            stateCopy[action.todolistId] = tasks.map(t => t.id === action.taskId ? { ...t, isDone: action.isDone } : t)
+
             return stateCopy;
         }
 
         case 'CHANGE-TASK-TITLE': {
             const stateCopy = { ...state }
             let tasks = state[action.todolistId];
-            let task = tasks.find(t => t.id === action.taskId);
-            if (task) {
-                task.title = action.title;
-            }
+            stateCopy[action.todolistId] = tasks.map(t => t.id === action.taskId ? { ...t, title: action.title } : t)
+
             return stateCopy;
         }
 
@@ -102,7 +97,7 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
     }
 }
 
-// const generateId = v1();
+
 
 
 

@@ -1,5 +1,5 @@
 import nextId from "react-id-generator";
-import { FilterValuesType, TodolistType } from "../App";
+import { FilterValuesType, TodolistType } from "../AppWithRedux";
 
 
 

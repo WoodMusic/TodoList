@@ -4,10 +4,11 @@ import { ControlPoint } from "@mui/icons-material";
 
 type AddItemPropsType = {
     addItem: (title: string) => void
-    lable: string
+    label: string
 }
 
-export function AddItemForm(props: AddItemPropsType) {
+export const AddItemForm = React.memo((props: AddItemPropsType) => {
+    console.log('AddItemForm is called');
 
     const [title, setTitle] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -17,7 +18,9 @@ export function AddItemForm(props: AddItemPropsType) {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        if (error !== null) {
+            setError(null);
+        }
         if (e.charCode === 13) {
             if (title.trim() !== '') {
                 addTask();
@@ -46,7 +49,7 @@ export function AddItemForm(props: AddItemPropsType) {
         <div>
             <TextField
                 variant={'outlined'}
-                label={props.lable}
+                label={props.label}
                 value={title}
                 type="text"
                 onChange={onNewTitleChangeHandler}
@@ -62,4 +65,4 @@ export function AddItemForm(props: AddItemPropsType) {
             </IconButton>
         </div>
     )
-}
+})
